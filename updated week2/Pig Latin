@@ -10,9 +10,10 @@
       
       // Check if input is empty or a single-letter word
       if (!input || input.trim().length === 0) {
-        document.getElementById("translation").textContent = "Input can't be translated.";
+        document.getElementById("translation").textContent = " Warning Input can't be translated.";
         return;
       }
+      
       
       // Convert the input to lowercase for easier processing
       input = input.toLowerCase();
@@ -51,6 +52,9 @@
       
       // Display the translation
       document.getElementById("translation").textContent = "Translation: " + translatedSentence;
+
+
+      
     }
     
     // Function to check if a character is a vowel
@@ -70,5 +74,9 @@
   <input type="text" id="userInput">
   <button onclick="translateToPigLatin()">Translate</button>
   <p id="translation"></p>
+
+  
 </body>
+
+
 </html>
