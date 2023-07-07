@@ -1,0 +1,74 @@
+ Angelo Nicolo July 6 2023
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pig Latin Translator</title>
+  <script>
+    function translateToPigLatin() {
+      var input = document.getElementById("userInput").value;
+      
+      // Check if input is empty or a single-letter word
+      if (!input || input.trim().length === 0) {
+        document.getElementById("translation").textContent = "Input can't be translated.";
+        return;
+      }
+      
+      // Convert the input to lowercase for easier processing
+      input = input.toLowerCase();
+    
+      // Split the input into an array of words
+      var words = input.split(" ");
+      
+      // Array to store the translated words
+      var translatedWords = [];
+      
+      // Looping through each word
+      for (var i = 0; i < words.length; i++) {
+        var word = words[i];
+        
+        // Check if word starts with a vowel
+        if (isVowel(word[0])) {
+          // Append 'way' to the end of the word
+          translatedWords.push(word + "way");
+        } else if (isConsonant(word[0])) {
+          // Check if word starts with two consonants
+          if (isConsonant(word[1])) {
+            // Move the first two letters to the end and append 'ay'
+            translatedWords.push(word.slice(2) + word.slice(0, 2) + "ay");
+          } else {
+            // Move the first letter to the end and append 'ay'
+            translatedWords.push(word.slice(1) + word[0] + "ay");
+          }
+        } else {
+          // If the word doesn't start with a vowel or consonant, skip translation
+          translatedWords.push(word);
+        }
+      }
+      
+      // Join the translated words back into a sentence
+      var translatedSentence = translatedWords.join(" ");
+      
+      // Display the translation
+      document.getElementById("translation").textContent = "Translation: " + translatedSentence;
+    }
+    
+    // Function to check if a character is a vowel
+    function isVowel(char) {
+      return "aeiou".includes(char);
+    }
+    
+    // Function to check if a character is a consonant
+    function isConsonant(char) {
+      return !isVowel(char);
+    }
+  </script>
+</head>
+<body>
+  <h1>Pig Latin Translator</h1>
+  <label for="userInput">Enter a phrase to translate to Pig Latin:</label>
+  <input type="text" id="userInput">
+  <button onclick="translateToPigLatin()">Translate</button>
+  <p id="translation"></p>
+</body>
+</html>
