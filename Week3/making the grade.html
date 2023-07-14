@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Grades</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1>Student Grades</h1>
+
+  <script>
+    var grades = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+
+    // Convert grades string to an array of students
+    var students = grades.split(", ");
+
+    // Function to capitalize the first letter of a string
+    function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    // Display name and grade for each student
+    for (var i = 0; i < students.length; i++) {
+      var student = students[i].split("|");
+      var name = capitalizeFirstLetter(student[0]);
+      var score = parseInt(student[1]);
+      document.write("<p>" + name + " - " + score + "</p>");
+    }
+
+    // Display total number of students
+    document.write("<p>Total number of students: " + students.length + "</p>");
+
+    // Calculate the average grade
+    var sum = 0;
+    for (var i = 0; i < students.length; i++) {
+      var score = parseInt(students[i].split("|")[1]);
+      sum += score;
+    }
+    var average = sum / students.length;
+
+    // Display average grade
+    document.write("<p>Average grade: " + average.toFixed(2) + "</p>");
+
+    // Find highest and lowest student grades
+    var highest = 0;
+    var lowest = Infinity;
+    var highestStudent = "";
+    var lowestStudent = "";
+
+    for (var i = 0; i < students.length; i++) {
+      var student = students[i].split("|");
+      var score = parseInt(student[1]);
+
+      if (score > highest) {
+        highest = score;
+        highestStudent = capitalizeFirstLetter(student[0]);
+      }
+
+      if (score < lowest) {
+        lowest = score;
+        lowestStudent = capitalizeFirstLetter(student[0]);
+      }
+    }
+
+    // Display highest and lowest student grades
+    document.write("<p>Highest grade: " + highestStudent + " - " + highest + "</p>");
+    document.write("<p>Lowest grade: " + lowestStudent + " - " + lowest + "</p>");
+
+    // Display students in alphabetical order
+    students.sort();
+    document.write("<h2>Students in Alphabetical Order</h2>");
+    for (var i = 0; i < students.length; i++) {
+      var student = students[i].split("|");
+      var name = capitalizeFirstLetter(student[0]);
+      var score = parseInt(student[1]);
+      document.write("<p>" + name + " - " + score + "</p>");
+    }
+  </script>
+</body>
+</html>
