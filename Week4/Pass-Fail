@@ -1,0 +1,43 @@
+<!-- Your HTML form with input fields for first name, last name, and password -->
+<form id="myForm">
+  <label for="firstName">First Name:</label>
+  <input type="text" id="firstName" required>
+  <br>
+  <label for="lastName">Last Name:</label>
+  <input type="text" id="lastName" required>
+  <br>
+  <label for="password">Password:</label>
+  <input type="password" id="password" required>
+  <br>
+  <button type="button" onclick="validateForm()">Submit</button>
+</form>
+
+<!-- JavaScript code -->
+<script>
+  function validatePassword(password) {
+    // Check if the password has at least 8 characters, one uppercase letter, and one lowercase letter
+    return password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password);
+  }
+
+  function validateForm() {
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const password = document.getElementById('password').value;
+
+    // Check if first name and last name are not missing
+    if (!firstName || !lastName) {
+      alert("Please enter both first name and last name.");
+      return;
+    }
+
+    // Check if the password is valid
+    if (!validatePassword(password)) {
+      alert("Invalid password. Password should have at least 8 characters, one uppercase letter, and one lowercase letter.");
+      return;
+    }
+
+    // If all form fields are valid
+    alert("All form entries are valid!");
+  }
+</script>
+
