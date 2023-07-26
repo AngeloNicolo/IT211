@@ -1,17 +1,126 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Card Dealing Program</title>
+  <title>Card Dealing Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    h1 {
+      color: #1a1a1a;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .hand-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .card {
+      width: 72px;
+      height: 96px;
+      margin: 10px;
+      background-image: url('https://deckofcardsapi.com/static/img/cards.png');
+      position: relative;
+    }
+
+    .card span {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+  </style>
 </head>
 <body>
-    <h1>Card Dealing Program</h1>
-    <div id="hand"></div>
-    <button onclick="dealHand()">Deal Hand</button>
+  <h1>Card Dealing Game</h1>
+  <button onclick="dealHand()">Deal Hand</button>
+  <div class="hand-container" id="card_hand"></div>
 
-    <script src="script.js"></script>
+  <script>
+    class Card {
+      constructor(value, suit) {
+        this.value = value;
+        this.suit = suit;
+      }
+
+      getName() {
+        if (this.value === 1) return "Ace";
+        else if (this.value === 11) return "Jack";
+        else if (this.value === 12) return "Queen";
+        else if (this.value === 13) return "King";
+        else return this.value.toString();
+      }
+
+      getSpritePosition() {
+        const values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "1"];
+        const suits = ["H", "S", "D", "C"];
+        const x = values.indexOf(this.getName()) * 73;
+        const y = suits.indexOf(this.suit) * 97;
+        return `-${x}px -${y}px`;
+      }
+    }
+
+    const deck = [];
+    const suits = ["Hearts", "Spades", "Diamonds", "Clubs"];
+    for (let value = 1; value <= 13; value++) {
+      for (const suit of suits) {
+        deck.push(new Card(value, suit));
+      }
+    }
+
+    const shownCards = new Set();
+
+    const drawCardHand = () => {
+      const cardContainer = document.getElementById("card_hand");
+      cardContainer.innerHTML = ""; // Clear previous hand
+
+      const hand = [];
+      while (hand.length < 5) {
+        const randomIndex = Math.floor(Math.random() * deck.length);
+        const card = deck[randomIndex];
+        if (!shownCards.has(card)) {
+          hand.push(card);
+          shownCards.add(card);
+        }
+      }
+
+      for (const card of hand) {
+        const cardElement = document.createElement("div");
+        cardElement.classList.add("card");
+        cardElement.style.backgroundPosition = card.getSpritePosition();
+        cardElement.innerHTML = `<span>${card.getName()}</span>`;
+        cardContainer.appendChild(cardElement);
+      }
+    };
+
+    const dealHand = () => {
+      resetShownCards();
+      drawCardHand();
+    };
+
+    const resetShownCards = () => {
+      shownCards.clear();
+    };
+  </script>
 </body>
 </html>
-
-
-
